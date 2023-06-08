@@ -11,7 +11,7 @@
       <script>
          // Creating map options
          var mapOptions = {
-            center: [38.9869, -76.9426], // Update with University of Maryland's coordinates
+            center: [38.9869, -76.9426], // Update with University of Maryland's coordinates, plotting single point
             zoom: 10
          }
          
@@ -24,15 +24,59 @@
          // Adding layer to the map
          map.addLayer(layer);
 
-         // Adding a marker at University of Maryland's location
-         var umdMarker = L.marker([38.9869, -76.9426]).addTo(map).bindPopup("University of Maryland");
+
+         var points = [
+            {
+               coordinates: [38.9869, -76.9426],
+               location: 'University of Maryland'
+            },
+            {
+               coordinates: [38.8315, -77.3117],
+               location: 'George Mason University'
+            },
+            {
+               coordinates: [38.8895, -77.0353],
+               location: 'Washington Monument'
+            },
+            {
+               coordinates: [40.7128, -74.0060],
+               location: 'New York City'
+            },
+            {
+               coordinates: [51.5074, -0.1278],
+               location: 'London'
+            },
+            {
+               coordinates: [37.7749, -122.4194],
+               location: 'San Francisco'
+            },
+            {
+               coordinates: [-33.8651, 151.2099],
+               location: 'Sydney'
+            },
+            {
+               coordinates: [55.7558, 37.6176],
+               location: 'Moscow'
+            },
+            {
+               coordinates: [33.4484, 112.0740],
+               location: 'Phoenix Arizona'
+            },
+            {
+               coordinates: [42.3314, 83.0458],
+               location: 'Detroit'
+            },
+            // Add more points with their respective locations
+         ];
+
+            // Loop through the array of points and create markers for each point
+            for (var i = 0; i < points.length; i++) {
+            var marker = L.marker(points[i].coordinates, { icon: L.icon({ iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png', iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41] }) }).addTo(map);
+            marker.bindPopup(points[i].location);
+         }
+
          
-         // Adding a circle marker to highlight the point
-         var highlightMarker = L.circleMarker([38.9869, -76.9426], {
-            color: 'red',
-            radius: 8,
-            fillOpacity: 1
-         }).addTo(map);
+         
       </script>
    </body>
    
