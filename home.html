@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <title>Leaflet sample</title>
+      <title>Leaflet Example - Plotting University of Maryland College Park</title>
       <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
       <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
    </head>
@@ -11,7 +11,7 @@
       <script>
          // Creating map options
          var mapOptions = {
-            center: [17.385044, 78.486671],
+            center: [38.9869, -76.9426], // Update with University of Maryland's coordinates
             zoom: 10
          }
          
@@ -23,6 +23,16 @@
          
          // Adding layer to the map
          map.addLayer(layer);
+
+         // Adding a marker at University of Maryland's location
+         var umdMarker = L.marker([38.9869, -76.9426]).addTo(map).bindPopup("University of Maryland");
+         
+         // Adding a circle marker to highlight the point
+         var highlightMarker = L.circleMarker([38.9869, -76.9426], {
+            color: 'red',
+            radius: 8,
+            fillOpacity: 1
+         }).addTo(map);
       </script>
    </body>
    
