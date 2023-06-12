@@ -1,29 +1,37 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <title>Leaflet Example - Plotting University of Maryland College Park</title>
-      <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
-      <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+      <title>Leaflet Example - Plotting Locations</title>
+      <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+      <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
    </head>
 
    <body>
-      <div id = "map" style = "width: 900px; height: 580px"></div>
+      <div id="map" style="width: 900px; height: 580px"></div>
+      <form id="locationForm">
+         <label for="latitude">Latitude:</label>
+         <input type="text" id="latitude" name="latitude">
+         <br>
+         <label for="longitude">Longitude:</label>
+         <input type="text" id="longitude" name="longitude">
+         <br>
+         <button type="submit">Plot Location</button>
+      </form>
       <script>
          // Creating map options
          var mapOptions = {
-            center: [38.9869, -76.9426], // Update with University of Maryland's coordinates, plotting single point
+            center: [38.9869, -76.9426],
             zoom: 10
          }
-         
+
          // Creating a map object
          var map = new L.map('map', mapOptions);
-         
+
          // Creating a Layer object
          var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-         
+
          // Adding layer to the map
          map.addLayer(layer);
-
 
          var points = [
             {
@@ -34,50 +42,57 @@
                coordinates: [38.8315, -77.3117],
                location: 'George Mason University'
             },
-            {
-               coordinates: [38.8895, -77.0353],
-               location: 'Washington Monument'
-            },
-            {
-               coordinates: [40.7128, -74.0060],
-               location: 'New York City'
-            },
-            {
-               coordinates: [51.5074, -0.1278],
-               location: 'London'
-            },
-            {
-               coordinates: [37.7749, -122.4194],
-               location: 'San Francisco'
-            },
-            {
-               coordinates: [-33.8651, 151.2099],
-               location: 'Sydney'
-            },
-            {
-               coordinates: [55.7558, 37.6176],
-               location: 'Moscow'
-            },
-            {
-               coordinates: [33.4484, 112.0740],
-               location: 'Phoenix Arizona'
-            },
-            {
-               coordinates: [42.3314, 83.0458],
-               location: 'Detroit'
-            },
             // Add more points with their respective locations
          ];
 
-            // Loop through the array of points and create markers for each point
-            for (var i = 0; i < points.length; i++) {
-            var marker = L.marker(points[i].coordinates, { icon: L.icon({ iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png', iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41] }) }).addTo(map);
+         // Loop through the array of points and create markers for each point
+         for (var i = 0; i < points.length; i++) {
+            var marker = L.marker(points[i].coordinates, {
+               icon: L.icon({
+                  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                  iconSize: [25, 41],
+                  iconAnchor: [12, 41],
+                  popupAnchor: [1, -34],
+                  shadowSize: [41, 41]
+               })
+            }).addTo(map);
             marker.bindPopup(points[i].location);
          }
 
-         
-         
+         // Function to handle form submission
+         function handleFormSubmit(event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            // Get the latitude and longitude values from the form
+            var latitude = parseFloat(document.getElementById('latitude').value);
+            var longitude = parseFloat(document.getElementById('longitude').value);
+
+            // Check if the latitude and longitude values are valid numbers
+            if (isNaN(latitude) || isNaN(longitude)) {
+               alert('Please enter valid latitude and longitude values.');
+               return;
+            }
+
+            // Create a marker for the entered location
+            var marker = L.marker([latitude, longitude], {
+               icon: L.icon({
+                  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+                  iconSize: [25, 41],
+                  iconAnchor: [12, 41],
+                  popupAnchor: [1, -34],
+                  shadowSize: [41, 41]
+               })
+            }).addTo(map);
+            marker.bindPopup('Custom Location');
+
+            // Reset the form
+            document.getElementById('latitude').value = '';
+            document.getElementById('longitude').value = '';
+         }
+
+         // Add event listener to the form
+         var form = document.getElementById('locationForm');
+         form.addEventListener('submit', handleFormSubmit);
       </script>
    </body>
-   
 </html>
